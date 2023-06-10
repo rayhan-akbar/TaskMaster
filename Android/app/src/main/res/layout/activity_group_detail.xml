@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/biru_tua"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15.7dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="15.7dp"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="480dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="444dp"
+                android:background="@drawable/white_cueve_bg" />
+
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20.7dp">
+
+
+                <TextView
+                    android:id="@+id/GroupDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Group Detail"
+                    android:textColor="#030303"
+                    android:textSize="31.3sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Group Name"
+                    android:textColor="@color/biru_hitam"
+                    android:textSize="13.3sp" />
+
+                <TextView
+                    android:id="@+id/GroupName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Name"
+                    android:textColor="#000000"
+                    android:textSize="15.3sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="@color/biru_hitam" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Group Description"
+                    android:textColor="@color/biru_hitam"
+                    android:textSize="13.3sp" />
+
+                <TextView
+                    android:id="@+id/GroupDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Description"
+                    android:textColor="#000000"
+                    android:textSize="15.3sp" />
+
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="@color/biru_hitam" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Entry Date"
+                    android:textColor="@color/biru_hitam"
+                    android:textSize="13.3sp" />
+
+                <TextView
+                    android:id="@+id/GroupDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Date"
+                    android:textColor="#000000"
+                    android:textSize="15.3sp" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="6.3dp"
+                    android:layout_marginRight="44.3dp"
+                    android:background="@color/biru_hitam" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="510dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+
+
+        <Button
+            android:id="@+id/unenrollGroup"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unenroll group">
+        </Button>
+
+    </LinearLayout>
+
+</RelativeLayout>
