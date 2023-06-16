@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,8 @@ public class ProfileActivity extends AppCompatActivity {
     ProgressDialog loading;
     BaseApiService mApiService;
     Context mContext;
+    SharedPreferences sharedpreferences;
+    public static final String SHARED_PREFS = "shared_prefs";
     public static users currentUser;
 
     @Override
@@ -58,6 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         mContext = this;
         mApiService = UtilsApi.getAPIService();
 
+        sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         username.setText(currentUser.getUsername());
 
         deleteProfile.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +92,13 @@ public class ProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                // below line will clear
+                // the data in shared prefs.
+                editor.clear();
+                // below line will apply empty
+                // data to shared prefs.
+                editor.apply();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
                 finish();

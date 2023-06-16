@@ -17,7 +17,7 @@ router.post('/addgroup', tmController.addGroup);
 
 router.get('/showgroup', tmController.showGroup);
 
-router.get('/searchgroupbyname', tmController.searchGroupByName);
+router.post('/searchgroupbyname', tmController.searchGroupByName);
 
 router.get('/searchgroupbyid', tmController.searchGroupByID);
 
@@ -33,7 +33,15 @@ router.post('/addgrouptask', tmController.addGroupTask);
 
 router.post('/showindividualtask', tmController.showIndividualTask);
 
+router.post('/searchindividualtask', tmController.searchIndividualTaskByName);
+
+router.post('/filterindividualtask', tmController.filterIndividualTaskByStatus);
+
 router.post('/showgrouptask', tmController.showGroupTask);
+
+router.post('/searchgrouptask', tmController.searchGroupTaskByName);
+
+router.post('/filtergrouptask', tmController.filterGroupTaskByStatus);
 
 router.put('/updateindividualtask', tmController.updateIndividualTask);
 

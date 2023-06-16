@@ -53,9 +53,14 @@ public class CreateEnrollmentActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
-        Intent intent = new Intent(mContext, GroupEnrollmentActivity.class);
+        Intent intent;
+        if(isFromProfile){
+            intent = new Intent(mContext, GroupEnrollmentActivity.class);
+        }else{
+            intent = new Intent(mContext, GroupSelectionActivity.class);
+
+        }
         startActivity(intent);
-        finish();
     }
 
     @Override

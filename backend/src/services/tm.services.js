@@ -123,7 +123,7 @@ async function showGroup (){
 async function searchGroupByName (tm){
     const {Nama_Group} = tm;
     if(group){
-        const query = `SELECT * FROM groups WHERE "nama_group" = '${Nama_Group}'`;
+        const query = `SELECT * FROM groups WHERE nama_group LIKE '%${Nama_Group}%'`;
         const result = await db.query(query);
         if(result.rowCount){
             return {
@@ -273,7 +273,51 @@ async function addGroupTask (tm){
 
 async function showIndividualTask (user){
     if(user){
-        const query = `SELECT * FROM TugasIndividu WHERE UserID=${user.UserID}`;
+        const query = `SELECT * FROM TugasIndividu WHERE UserID=${user.UserID} ORDER BY tanggal_pengerjaan ASC`;
+        const result = await db.query(query);
+        if(result.rowCount > 0){
+            return {
+                message: 'Task Found',
+                showIndividualTask : result.rows
+            }
+        }else{
+            return{
+                message: 'No Task Found' 
+            } 
+        }
+    }
+    else{
+        return {
+            message: 'User not logged in'
+        }
+    }
+}
+
+async function filterIndividualTaskByStatus (user){
+    if(user){
+        const query = `SELECT * FROM TugasIndividu WHERE UserID=${user.UserID} AND status='${user.Status}' ORDER BY tanggal_pengerjaan ASC`;
+        const result = await db.query(query);
+        if(result.rowCount > 0){
+            return {
+                message: 'Task Found',
+                showIndividualTask : result.rows
+            }
+        }else{
+            return{
+                message: 'No Task Found' 
+            } 
+        }
+    }
+    else{
+        return {
+            message: 'User not logged in'
+        }
+    }
+}
+
+async function searchIndividualTaskByName (user){
+    if(user){
+        const query = `SELECT * FROM TugasIndividu WHERE UserID=${user.UserID} AND nama_tugas LIKE '%${user.Nama_Tugas}%' ORDER BY tanggal_pengerjaan ASC`;
         const result = await db.query(query);
         if(result.rowCount > 0){
             return {
@@ -295,7 +339,7 @@ async function showIndividualTask (user){
 
 async function showGroupTask (tm){
     const {GroupID} = tm;
-    const query = `SELECT * FROM TugasKelompok WHERE GroupID=${GroupID}`;
+    const query = `SELECT * FROM TugasKelompok WHERE GroupID=${GroupID} ORDER BY tanggal_pengerjaan ASC`;
     const result = await db.query(query);
     if(result.rowCount > 0){
         return {
@@ -308,6 +352,45 @@ async function showGroupTask (tm){
         } 
     }
 
+}
+
+async function filterGroupTaskByStatus (tm){
+    const {GroupID, Status} = tm;
+    const query = `SELECT * FROM TugasKelompok WHERE GroupID=${GroupID} AND Status='${Status}' ORDER BY tanggal_pengerjaan ASC`;
+    const result = await db.query(query);
+    if(result.rowCount > 0){
+        return {
+            message: 'Task Found',
+            showGroupTask : result.rows
+        }
+    }else{
+        return{
+            message: 'No Task Found' 
+        } 
+    }
+    
+}
+
+async function searchGroupTaskByName (user){
+    if(user){
+        const query = `SELECT * FROM TugasKelompok WHERE GroupID=${user.GroupID} AND nama_tugas LIKE '%${user.Nama_Tugas}%' ORDER BY tanggal_pengerjaan ASC`;
+        const result = await db.query(query);
+        if(result.rowCount > 0){
+            return {
+                message: 'Task Found',
+                showIndividualTask : result.rows
+            }
+        }else{
+            return{
+                message: 'No Task Found' 
+            } 
+        }
+    }
+    else{
+        return {
+            message: 'User not logged in'
+        }
+    }
 }
 
 async function updateIndividualTask (tm, user){
@@ -400,7 +483,11 @@ module.exports = {
     addIndividualTask,
     addGroupTask,
     showIndividualTask,
+    searchIndividualTaskByName,
+    filterIndividualTaskByStatus,
     showGroupTask,
+    searchGroupTaskByName,
+    filterGroupTaskByStatus,
     updateIndividualTask,
     updateGroupTask,
     deleteIndividualTask,

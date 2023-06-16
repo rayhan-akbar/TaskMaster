@@ -48,6 +48,12 @@ public class GroupSelectionActivity extends AppCompatActivity {
     Context mContext;
 
     @Override
+    public void onBackPressed(){
+        Intent intent = new Intent(mContext, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_selection);
@@ -77,6 +83,7 @@ public class GroupSelectionActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GroupTaskListActivity.currentGroup = showEnrollment.get(position);
                 GroupTaskListActivity.currentUser = currentUser;
+                System.out.println(GroupTaskListActivity.currentGroup.getGroupID());
                 Intent intent = new Intent(mContext, GroupTaskListActivity.class);
                 startActivity(intent);
             }

@@ -3,6 +3,8 @@ package com.rayhan.taskmaster.model;
 import androidx.annotation.NonNull;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class GroupTaskList {
     private int tugasgrupid;
@@ -11,6 +13,9 @@ public class GroupTaskList {
     private String deskripsi_tugas;
     private String status;
     private String tanggal_pengerjaan;
+
+    public static final DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+    public static final SimpleDateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yyyy");
 
     public int getTaskId() {return tugasgrupid; }
     public int getGroupID() {return groupid; }

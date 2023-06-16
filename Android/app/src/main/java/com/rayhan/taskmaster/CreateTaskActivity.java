@@ -181,7 +181,6 @@ public class CreateTaskActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(mContext, "Failed to add Task", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(mContext, "Failed to add Income", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

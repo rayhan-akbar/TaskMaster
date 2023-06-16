@@ -127,9 +127,45 @@ async function showIndividualTask(req,res){
     }
 }
 
+async function searchIndividualTaskByName(req,res){
+    try{
+        const result = await tmService.searchIndividualTaskByName(req.body);
+        res.json(result);
+    }catch(err){
+        res.json(err);
+    }
+}
+
+async function filterIndividualTaskByStatus(req,res){
+    try{
+        const result = await tmService.filterIndividualTaskByStatus(req.body);
+        res.json(result);
+    }catch(err){
+        res.json(err);
+    }
+}
+
 async function showGroupTask(req,res){
     try{
         const result = await tmService.showGroupTask(req.body);
+        res.json(result);
+    }catch(err){
+        res.json(err);
+    }
+}
+
+async function searchGroupTaskByName(req,res){
+    try{
+        const result = await tmService.searchGroupTaskByName(req.body);
+        res.json(result);
+    }catch(err){
+        res.json(err);
+    }
+}
+
+async function filterGroupTaskByStatus(req,res){
+    try{
+        const result = await tmService.filterGroupTaskByStatus(req.body);
         res.json(result);
     }catch(err){
         res.json(err);
@@ -187,7 +223,11 @@ module.exports = {
     addIndividualTask,
     addGroupTask,
     showIndividualTask,
+    searchGroupTaskByName,
+    searchIndividualTaskByName,
+    filterIndividualTaskByStatus,
     showGroupTask,
+    filterGroupTaskByStatus,
     updateIndividualTask,
     updateGroupTask,
     deleteIndividualTask,

@@ -157,6 +157,30 @@ public interface BaseApiService {
     Call<ResponseBody> showIndividualTask(@Field("UserID") Integer UserID);
 
     /**
+     * Filter Individual Task request call
+     *
+     * @param UserID the user ID
+     * @param Status the task status
+     * @return the call
+     */
+    @FormUrlEncoded
+    @POST("filterindividualtask")
+    Call<ResponseBody> filterIndividualTask(@Field("UserID") Integer UserID,
+                                            @Field("Status") String Status);
+
+    /**
+     * Search Individual Task request call
+     *
+     * @param UserID the user ID
+     * @param Nama_Tugas the task status
+     * @return the call
+     */
+    @FormUrlEncoded
+    @POST("searchindividualtask")
+    Call<ResponseBody> searchIndividualTask(@Field("UserID") Integer UserID,
+                                            @Field("Nama_Tugas") String Nama_Tugas);
+
+    /**
      * Show Group Task request call
      *
      * @param GroupID the user ID
@@ -165,6 +189,30 @@ public interface BaseApiService {
     @FormUrlEncoded
     @POST("showgrouptask")
     Call<ResponseBody> showGroupTask(@Field("GroupID") Integer GroupID);
+
+    /**
+     * Filter Group Task request call
+     *
+     * @param GroupID the user ID
+     * @param Status the task status
+     * @return the call
+     */
+    @FormUrlEncoded
+    @POST("filtergrouptask")
+    Call<ResponseBody> filterGroupTask(@Field("GroupID") Integer GroupID,
+                                            @Field("Status") String Status);
+
+    /**
+     * Search Group Task request call
+     *
+     * @param GroupID the user ID
+     * @param Nama_Tugas the task status
+     * @return the call
+     */
+    @FormUrlEncoded
+    @POST("searchgrouptask")
+    Call<ResponseBody> searchGroupTask(@Field("UserID") Integer GroupID,
+                                       @Field("Nama_Tugas") String Nama_Tugas);
 
     /**
      * Delete User call
