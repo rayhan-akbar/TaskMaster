@@ -27,6 +27,8 @@ router.delete('/unenrollgroup', tmController.unenrollGroup);
 
 router.post('/showenrollment', tmController.showEnrollment);
 
+router.post('/showgroupmember', tmController.showGroupMembers);
+
 router.post('/addindividualtask', tmController.addIndividualTask);
 
 router.post('/addgrouptask', tmController.addGroupTask);

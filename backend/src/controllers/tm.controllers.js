@@ -100,6 +100,15 @@ async function showEnrollment(req,res){
     }
 }
 
+async function showGroupMembers(req,res){
+    try{
+        const result = await tmService.showGroupMembers(req.body);
+        res.json(result);
+    }catch(err){
+        res.json(err);
+    }
+}
+
 async function addIndividualTask(req,res){
     try{
         const result = await tmService.addIndividualTask(req.body, req.body);
@@ -220,6 +229,7 @@ module.exports = {
     enrollGroup,
     unenrollGroup,
     showEnrollment,
+    showGroupMembers,
     addIndividualTask,
     addGroupTask,
     showIndividualTask,

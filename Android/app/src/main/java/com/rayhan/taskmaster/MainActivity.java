@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -104,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         Button addNewTask = (Button) findViewById(R.id.addnewtask);
         CardView filterCardView = findViewById(R.id.FilterCardView);
         Button applyFilterButton = (Button) findViewById(R.id.ApplyFilter);
+        ImageView searchButton = (ImageView) findViewById(R.id.search_button);
+        EditText searchTask = (EditText) findViewById(R.id.search_task);
         notStartedFilter = (CheckBox) findViewById(R.id.showNotStarted);
         inProgressFilter = (CheckBox) findViewById(R.id.showInProgress);
         completedFilter = (CheckBox) findViewById(R.id.showCompleted);
@@ -183,6 +187,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!searchTask.getText().toString().isEmpty()){
+                    notStartedFilter.setChecked(false);
+                    inProgressFilter.setChecked(false);
+                    completedFilter.setChecked(false);
+                    searchListByName(currentUser.getId(), searchTask.getText().toString());
+                }else{
+                    notStartedFilter.setChecked(false);
+                    inProgressFilter.setChecked(false);
+                    completedFilter.setChecked(false);
+                    getListRequest();
+                    Toast.makeText(mContext, "Null Entry!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
     public void onCheckboxClicked(View view) {
 
@@ -206,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     void getListRequest() {
         Gson gson = new Gson();
         mApiService.showIndividualTask(currentUser.getId())
@@ -265,6 +288,42 @@ public class MainActivity extends AppCompatActivity {
                                     // Jika login gagal
                                     String error_message = jsonRESULTS.getString("User not logged in");
                                     Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(mContext, "Sudah Login", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.toString());
+                    }
+                });
+    }
+
+    void searchListByName(Integer UserID, String Nama_Tugas){
+        Gson gson = new Gson();
+        mApiService.searchIndividualTask(UserID, Nama_Tugas)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            try {
+                                JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                                JSONArray jsonArray = jsonRESULTS.getJSONArray("showIndividualTask");
+                                if (jsonRESULTS.getString("message").equals("Task Found")){
+                                    showIndividualTask = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<IndividualTaskList>>() {}.getType());
+                                    itemsAdapter = new ArrayAdapter<IndividualTaskList>(getApplicationContext(),
+                                            android.R.layout.simple_list_item_1, showIndividualTask);
+                                    lvItems.setAdapter(itemsAdapter);
+
+                                } else if(jsonRESULTS.getString("message").equals("No Task Found")){
+                                    Toast.makeText(mContext, "No Task Found!", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();

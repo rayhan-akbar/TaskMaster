@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rayhan.taskmaster.model.GroupEnrollmentList;
+import com.rayhan.taskmaster.model.GroupMemberList;
 import com.rayhan.taskmaster.model.users;
 import com.rayhan.taskmaster.request.BaseApiService;
 import com.rayhan.taskmaster.request.UtilsApi;
@@ -38,7 +39,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     BaseApiService mApiService;
     Context mContext;
     TextView groupName, groupDescription, groupDate;
-    Button unenrollGroup;
+    Button unenrollGroup, showGroupMember;
     ProgressDialog loading;
     public static final DateFormat dateFormatInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
     public static final SimpleDateFormat dateFormatOutput = new SimpleDateFormat("dd/MM/yyyy");
@@ -57,6 +58,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         groupDescription = (TextView) findViewById(R.id.GroupDescription);
         groupDate = (TextView) findViewById(R.id.GroupDate);
         unenrollGroup = (Button) findViewById(R.id.unenrollGroup);
+        showGroupMember = (Button) findViewById(R.id.showMember);
 
         try {
             Date date = dateFormatInput.parse(selectedGroup.getEntryDate());
@@ -90,6 +92,15 @@ public class GroupDetailActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+        showGroupMember.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GroupMemberListActivity.currentGroup = selectedGroup;
+                Intent intent = new Intent(mContext, GroupMemberListActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

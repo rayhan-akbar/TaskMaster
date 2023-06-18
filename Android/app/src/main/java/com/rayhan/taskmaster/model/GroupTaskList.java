@@ -2,9 +2,10 @@ package com.rayhan.taskmaster.model;
 
 import androidx.annotation.NonNull;
 
-import java.sql.Date;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GroupTaskList {
     private int tugasgrupid;
@@ -24,5 +25,13 @@ public class GroupTaskList {
     public String getTaskStatus() {return status; }
     public String getTaskDate() {return tanggal_pengerjaan; }
     @NonNull
-    public String toString() {return nama_tugas + "\n " + status;}
+    public String toString() {
+        Date date = null;
+        try {
+            date = dateFormatInput.parse(tanggal_pengerjaan);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return nama_tugas + "\nDue Date: " + dateFormatOutput.format(date) + "\nStatus: " + status;
+    }
 }

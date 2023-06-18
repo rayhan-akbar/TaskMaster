@@ -232,8 +232,31 @@ async function showEnrollment(user){
             message: 'User not logged in'
         }
     }
-
 }
+
+async function showGroupMembers(user){
+    if(user){
+        const query = `SELECT userid, username, tanggal_masuk FROM GroupEnrollment NATURAL JOIN users WHERE groupID=${user.GroupID}`;
+        const result = await db.query(query);
+        if(result.rowCount > 0){
+            return {
+                message: 'Group Member found',
+                showGroupMembers : result.rows
+            }
+        }else{
+            return{
+                message: 'No enrollment found'
+            } 
+        }
+    }
+    else{
+        return {
+            message: 'User not logged in'
+        }
+    }
+}
+
+
 async function addIndividualTask (tm, user){
     const {Nama_Tugas, Deskripsi_tugas, Tanggal_pengerjaan} = tm;
     if(user){
@@ -378,7 +401,7 @@ async function searchGroupTaskByName (user){
         if(result.rowCount > 0){
             return {
                 message: 'Task Found',
-                showIndividualTask : result.rows
+                showGroupTask : result.rows
             }
         }else{
             return{
@@ -480,6 +503,7 @@ module.exports = {
     enrollGroup,
     unenrollGroup,
     showEnrollment,
+    showGroupMembers,
     addIndividualTask,
     addGroupTask,
     showIndividualTask,

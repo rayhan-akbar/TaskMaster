@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -113,6 +114,8 @@ public class GroupTaskListActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
         ImageView filterCardViewButton = (ImageView) findViewById(R.id.filter_button);
+        ImageView searchButton = (ImageView) findViewById(R.id.search_button);
+        EditText searchTask = (EditText) findViewById(R.id.search_task);
 
         lvItems = (ListView) findViewById(R.id.taskList);
         filterCardView.setVisibility(View.INVISIBLE);
@@ -181,6 +184,24 @@ public class GroupTaskListActivity extends AppCompatActivity {
                     filterCardView.setVisibility(View.INVISIBLE);
                 }else if(filterCardView.getVisibility() == View.INVISIBLE) {
                     filterCardView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!searchTask.getText().toString().isEmpty()){
+                    notStartedFilter.setChecked(false);
+                    inProgressFilter.setChecked(false);
+                    completedFilter.setChecked(false);
+                    searchListByName(currentGroup.getGroupID(), searchTask.getText().toString());
+                }else{
+                    notStartedFilter.setChecked(false);
+                    inProgressFilter.setChecked(false);
+                    completedFilter.setChecked(false);
+                    getListRequest();
+                    Toast.makeText(mContext, "Null Entry!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -284,4 +305,42 @@ public class GroupTaskListActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    void searchListByName(Integer GroupID, String Nama_Tugas){
+        Gson gson = new Gson();
+        mApiService.searchGroupTask(GroupID, Nama_Tugas)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.isSuccessful()){
+                            try {
+
+                                JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                                JSONArray jsonArray = jsonRESULTS.getJSONArray("showGroupTask");
+                                if (jsonRESULTS.getString("message").equals("Task Found")){
+                                    showGroupTask = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<GroupTaskList>>() {}.getType());
+                                    itemsAdapter = new ArrayAdapter<GroupTaskList>(getApplicationContext(),
+                                            android.R.layout.simple_list_item_1, showGroupTask);
+                                    lvItems.setAdapter(itemsAdapter);
+
+                                } else if(jsonRESULTS.getString("message").equals("No Task Found")){
+                                    Toast.makeText(mContext, "No Task Found!", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Toast.makeText(mContext, "Sudah Login", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e("debug", "onFailure: ERROR > " + t.toString());
+                    }
+                });
+    }
+
 }

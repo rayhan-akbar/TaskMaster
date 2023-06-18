@@ -54,7 +54,7 @@
 
         </ImageView>
         <EditText
-            android:id="@+id/loginusername"
+            android:id="@+id/search_task"
             android:layout_width="263.7dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"

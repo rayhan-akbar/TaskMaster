@@ -147,6 +147,16 @@ public interface BaseApiService {
     Call<ResponseBody> showEnrollment(@Field("UserID") Integer UserID);
 
     /**
+     * Show Enrollment request call
+     *
+     * @param GroupID the Group ID
+     * @return the call
+     */
+    @FormUrlEncoded
+    @POST("showgroupmember")
+    Call<ResponseBody> showGroupMembers(@Field("GroupID") Integer GroupID);
+
+    /**
      * Show Individual Task request call
      *
      * @param UserID the user ID
@@ -211,7 +221,7 @@ public interface BaseApiService {
      */
     @FormUrlEncoded
     @POST("searchgrouptask")
-    Call<ResponseBody> searchGroupTask(@Field("UserID") Integer GroupID,
+    Call<ResponseBody> searchGroupTask(@Field("GroupID") Integer GroupID,
                                        @Field("Nama_Tugas") String Nama_Tugas);
 
     /**

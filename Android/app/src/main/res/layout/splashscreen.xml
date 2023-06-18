@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#030328">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/TMIcon"
@@ -18,39 +22,37 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+</androidx.constraintlayout.widget.ConstraintLayout>
+   <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="510dp"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
     <TextView
         android:id="@+id/Task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-50dp"
 
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="-25dp"
+
         android:fontFamily="@font/poppins_semibold"
         android:padding="0dp"
         android:text="Task"
         android:textColor="#32528D"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/Master"
-        app:layout_constraintTop_toBottomOf="@id/TMIcon" />
+        android:textSize="40sp"/>
 
     <TextView
         android:id="@+id/Master"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-50dp"
-        android:layout_marginStart="-25dp"
-        android:layout_marginEnd="32dp"
+
         android:fontFamily="@font/poppins_semibold"
         android:padding="0dp"
         android:text="Master"
         android:textColor="#F69A39"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/Task"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TMIcon" />
+        android:textSize="40sp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+</RelativeLayout>
