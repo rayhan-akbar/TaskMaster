@@ -22,8 +22,7 @@ app.use(session({
     store
     }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());

@@ -123,7 +123,7 @@ public interface BaseApiService {
      * @return the call
      */
     @FormUrlEncoded
-    @GET("searchgroupbyname")
+    @POST("searchgroupbyname")
     Call<ResponseBody> searchGroupByName(@Field("Nama_Group") String Nama_Group);
 
     /**

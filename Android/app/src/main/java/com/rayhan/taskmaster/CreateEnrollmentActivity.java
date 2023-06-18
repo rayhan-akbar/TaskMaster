@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -47,6 +49,8 @@ public class CreateEnrollmentActivity extends AppCompatActivity {
     public static Groups selectedGroupList = null;
     Button newGroup;
     BaseApiService mApiService;
+    EditText searchGroup;
+    ImageView searchButton;
     Context mContext;
     public static users currentUser;
     ProgressDialog loading;
@@ -77,6 +81,8 @@ public class CreateEnrollmentActivity extends AppCompatActivity {
     private void initComponents(){
         lvItems = (ListView) findViewById(R.id.groupList);
         newGroup = (Button) findViewById(R.id.createGroup);
+        searchButton = (ImageView) findViewById(R.id.search_button);
+        searchGroup = (EditText) findViewById(R.id.search_group);
         getListRequest();
 
         newGroup.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +114,18 @@ public class CreateEnrollmentActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!searchGroup.getText().toString().isEmpty()){
+                    searchGroupByName(searchGroup.getText().toString());
+                }else{
+                    getListRequest();
+                    Toast.makeText(mContext, "Null Entry!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -192,5 +210,42 @@ public class CreateEnrollmentActivity extends AppCompatActivity {
                         Log.e("debug", "onFailure: ERROR > " + t.toString());
                     }
                 });
+    }
+
+    void searchGroupByName(String Nama_Tugas){
+        Gson gson = new Gson();
+        mApiService.searchGroupByName(Nama_Tugas).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()){
+                    try {
+                        JSONObject jsonRESULTS = new JSONObject(response.body().string());
+                        JSONArray jsonArray = jsonRESULTS.getJSONArray("searchGroupByName");
+                        if (jsonRESULTS.getString("message").equals("Group found")){
+                            showGroup = gson.fromJson(jsonArray.toString(), new TypeToken<ArrayList<Groups>>() {}.getType());
+                            groupsAdapter = new ArrayAdapter<Groups>(getApplicationContext(),
+                                    android.R.layout.simple_list_item_1, showGroup);
+                            lvItems.setAdapter(groupsAdapter);
+
+                        } else {
+                            // Jika login gagal
+                            String error_message = jsonRESULTS.getString("User not logged in");
+                            Toast.makeText(mContext, error_message, Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Toast.makeText(mContext, "Sudah Login", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("debug", "onFailure: ERROR > " + t.toString());
+            }
+        });
     }
 }

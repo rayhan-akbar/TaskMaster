@@ -245,7 +245,7 @@ async function showGroupMembers(user){
             }
         }else{
             return{
-                message: 'No enrollment found'
+                message: 'No enrollment found'  
             } 
         }
     }
